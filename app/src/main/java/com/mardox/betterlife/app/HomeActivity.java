@@ -5,8 +5,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.mardox.betterlife.app.utils.MenuFunctions;
+
 
 public class HomeActivity extends ActionBarActivity {
+
+    public static final String PREFS_NAME = "BetterLife" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,7 @@ public class HomeActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            MenuFunctions.settings(this);
             return true;
         }
         return super.onOptionsItemSelected(item);
