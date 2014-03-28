@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
+import android.util.Log;
 
 import com.mardox.betterlife.app.utils.Notification;
 
@@ -53,9 +54,21 @@ public class DailyConceptService extends BroadcastReceiver {
             String output;
             int random;
             try {
-                String query = "http://30daylabs.com/cloud/api/concept?day=1&format=json";
-                URI url = new URI(query);
 
+                SharedPreferences storage = contextVariable.getSharedPreferences(HomeActivity.PREFS_NAME, contextVariable.MODE_MULTI_PROCESS);
+
+                // Set the date of the first launch
+                Long firstLaunchDate = storage.getLong("firstLaunchDate", 0);
+
+                //Calculate the day's # since the first launch
+                Long currentDay =( (System.currentTimeMillis() - firstLaunchDate)/(24 * 60 * 60 * 1000));
+
+                //Build the query
+                String query = "http://30daylabs.com/cloud/api/concept?day="+currentDay.toString()+"&format=json";
+
+                Log.i(HomeActivity.TAG,query);
+
+                URI url = new URI(query);
 
                 DefaultHttpClient httpClient = new DefaultHttpClient();
                 HttpGet httpGet = new HttpGet(url);
@@ -80,13 +93,14 @@ public class DailyConceptService extends BroadcastReceiver {
                 String title = responseJSON.getString("title");
 
                 String description = responseJSON.getString("description");
-//                String externalIcon = responseJSON.getJSONObject("thumbnail").getString("hqDefault");
+//                String externalIcon = responseJSON.getString("videoUrl");
 
                 // Adding some values to the HashMap
                 push.put("title", title);
-                push.put("description", description);
-//                push.put("externalIcon", externalIcon);
+                push.put("subtitle", description);
+                push.put("externalIcon", "");
 
+                Log.i(HomeActivity.TAG,title);
 
                 SharedPreferences settings = contextVariable.getSharedPreferences(HomeActivity.PREFS_NAME, Context.MODE_MULTI_PROCESS );
                 SharedPreferences.Editor editor = settings.edit();
@@ -94,7 +108,6 @@ public class DailyConceptService extends BroadcastReceiver {
                 editor.putString("todayConceptDescription", description );
                 editor.commit();
 
-//                Log.i("Daily - new ID", vidID);
                 if(!settings.getBoolean("noDailyAlert",false)) {
                     Notification.sendNotification(contextVariable, push);
                 }

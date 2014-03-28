@@ -12,7 +12,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.mardox.betterlife.app.HomeActivity;
 import com.mardox.betterlife.app.R;
@@ -72,7 +71,6 @@ public class Notification {
                         .setContentTitle(title)
                         .setContentText(subtitle);
 
-        Log.i(TAG, "image Icon ");
 
         if(!externalIcon.equals("")){
             Bitmap bitmap = getBitmapFromURL(externalIcon);

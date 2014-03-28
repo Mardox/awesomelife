@@ -30,7 +30,7 @@ public class AlarmController {
         // Cancel current alarm
         try {
             alarmMgr.cancel(pendingAlarmIntent);
-//            Log.d(CollectionActivity.TAG, "Alarm is deleted");
+//            Log.d(HomeActivity.TAG, "Alarm is deleted");
         } catch (Exception e) {
             Log.e(HomeActivity.TAG, "AlarmManager update was not canceled. " + e.toString());
         }
@@ -40,8 +40,8 @@ public class AlarmController {
         Calendar nowCalendar = Calendar.getInstance();
 
         alaramCalendar.setTimeInMillis(System.currentTimeMillis());
-        alaramCalendar.set(Calendar.HOUR_OF_DAY, 17);
-        alaramCalendar.set(Calendar.MINUTE, 00);
+        alaramCalendar.set(Calendar.HOUR_OF_DAY, 00);
+        alaramCalendar.set(Calendar.MINUTE, 39);
 
         //Make sure alarm is set for the next day
         if(alaramCalendar.getTimeInMillis() <= nowCalendar.getTimeInMillis())
@@ -52,7 +52,7 @@ public class AlarmController {
         alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP,
                 _alarmFinal,
                24*60*60*1000, pendingAlarmIntent);
-//            Log.i(CollectionActivity.TAG, "Alarm set");
+            Log.i(HomeActivity.TAG, "Alarm set");
 
     }
 

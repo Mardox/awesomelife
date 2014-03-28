@@ -1,15 +1,16 @@
 package com.mardox.betterlife.app;
 
-import android.content.ComponentName;
+import android.app.NotificationManager;
+import android.app.Service;
 import android.content.Context;
-import android.content.pm.PackageManager;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.mardox.betterlife.app.utils.AlarmController;
-import com.mardox.betterlife.app.utils.BaseBootReceiver;
 import com.mardox.betterlife.app.utils.MenuFunctions;
 
 
@@ -26,13 +27,40 @@ public class HomeActivity extends ActionBarActivity {
         setContentView(R.layout.activity_home);
 
 
-        //Start the daily video alarm - reboot persistant
-        ComponentName receiver = new ComponentName(context, BaseBootReceiver.class);
-        PackageManager pm = context.getPackageManager();
+
+
+        // Restore preferences
+        SharedPreferences storage = getSharedPreferences(PREFS_NAME, MODE_MULTI_PROCESS);
+        SharedPreferences.Editor editor = storage.edit();
+
+        // Set the date of the first launch
+        Long firstLaunchDate = storage.getLong("firstLaunchDate", 0);
+        if (firstLaunchDate == 0) {
+            firstLaunchDate = System.currentTimeMillis();
+            editor.putLong("firstLaunchDate", firstLaunchDate);
+            editor.commit();
+        }
+
+
+        String title = storage.getString("todayConceptTitle", "Hello");
+        String description = storage.getString("todayConceptDescription", "Main Subtitle");
+
+
+        TextView conceptTitleTextView = (TextView) findViewById(R.id.concept_main_title);
+        TextView conceptSubtitleTextView = (TextView) findViewById(R.id.concept_main_subtitle);
+
+        conceptTitleTextView.setText(title);
+        conceptSubtitleTextView.setText(description);
 
 
         //set daily pick alaram
         AlarmController.dailyVideoAlarm(context);
+
+
+        //Dismiss the notifications
+        NotificationManager manager = (NotificationManager) getSystemService(Service.NOTIFICATION_SERVICE);
+        manager.cancel(1);
+
     }
 
 
