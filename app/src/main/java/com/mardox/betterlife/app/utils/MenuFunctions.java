@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class MenuFunctions {
 
 
+
     public static boolean settings(Context context){
 
         final ArrayList mSelectedItems  = new ArrayList();  // Where we track the selected items
@@ -25,6 +26,8 @@ public class MenuFunctions {
         //Check is daily video is turned off
         if(prefs.getBoolean("noDailyAlert", false)){ticked[0]=false;}else{ticked[0]=true;}
         //Create the upgrade dialog
+
+
         new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.settings))
                 .setMultiChoiceItems(R.array.settings, ticked,

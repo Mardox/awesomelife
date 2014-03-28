@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.mardox.betterlife.app.utils.Notification;
@@ -100,7 +101,6 @@ public class DailyConceptService extends BroadcastReceiver {
                 push.put("subtitle", description);
                 push.put("externalIcon", "");
 
-                Log.i(HomeActivity.TAG,title);
 
                 SharedPreferences settings = contextVariable.getSharedPreferences(HomeActivity.PREFS_NAME, Context.MODE_MULTI_PROCESS );
                 SharedPreferences.Editor editor = settings.edit();
@@ -108,8 +108,11 @@ public class DailyConceptService extends BroadcastReceiver {
                 editor.putString("todayConceptDescription", description );
                 editor.commit();
 
-                if(!settings.getBoolean("noDailyAlert",false)) {
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(contextVariable);
+
+                if(sharedPref.getBoolean(SettingsActivity.KEY_PREF_DAILY_NOTIFICATION_SWITCH, true)) {
                     Notification.sendNotification(contextVariable, push);
+                    Log.i(HomeActivity.TAG,title);
                 }
 
 

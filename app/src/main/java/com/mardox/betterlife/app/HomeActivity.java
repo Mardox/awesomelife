@@ -4,38 +4,39 @@ package com.mardox.betterlife.app;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
+import com.google.analytics.tracking.android.EasyTracker;
 import com.mardox.betterlife.app.utils.AlarmController;
-import com.mardox.betterlife.app.utils.MenuFunctions;
-import com.mardox.betterlife.app.utils.TimePickerFragment;
 
 
 public class HomeActivity extends ActionBarActivity {
 
-    public static final String PREFS_NAME = "BetterLife" ;
+    public static final String PREFS_NAME = "better_life" ;
     public static final String TAG = "BetterLife";
 
     Context context = this;
+    SharedPreferences storage;
+
+    String title ;
+    String description ;
+
+    TextView conceptTitleTextView ;
+    TextView conceptSubtitleTextView ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
-
-
         // Restore preferences
-        SharedPreferences storage = getSharedPreferences(PREFS_NAME, MODE_MULTI_PROCESS);
+        storage = getSharedPreferences(PREFS_NAME, MODE_MULTI_PROCESS);
         SharedPreferences.Editor editor = storage.edit();
 
         // Set the date of the first launch
@@ -46,53 +47,77 @@ public class HomeActivity extends ActionBarActivity {
             editor.commit();
         }
 
-
-        String title = storage.getString("todayConceptTitle", "Hello");
-        String description = storage.getString("todayConceptDescription", "Main Subtitle");
-
-
-        TextView conceptTitleTextView = (TextView) findViewById(R.id.concept_main_title);
-        TextView conceptSubtitleTextView = (TextView) findViewById(R.id.concept_main_subtitle);
-
-        conceptTitleTextView.setText(title);
-        conceptSubtitleTextView.setText(description);
-
-
         //set daily pick alaram
         AlarmController.setDailyVideoAlarm(context);
 
 
+
+
+    }
+
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        EasyTracker.getInstance(this).activityStart(this);  // Add this method.
+        setTheConcept();
+    };
+
+
+    @Override
+    protected void onResume(){
+        super.onResume();
         //Dismiss the notifications
         NotificationManager manager = (NotificationManager) getSystemService(Service.NOTIFICATION_SERVICE);
         manager.cancel(1);
 
+    };
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        EasyTracker.getInstance(this).activityStop(this);  // Add this method.
+    }
+
+    private void setTheConcept(){
+
+        title = storage.getString("todayConceptTitle", "Hello");
+        description = storage.getString("todayConceptDescription", "Main Subtitle");
+
+
+        conceptTitleTextView = (TextView) findViewById(R.id.concept_main_title);
+        conceptSubtitleTextView = (TextView) findViewById(R.id.concept_main_subtitle);
+
+        conceptTitleTextView.setText(title);
+        conceptSubtitleTextView.setText(description);
 
     }
 
 
-    public void showTimePickerDialog(View v) {
-        DialogFragment newFragment = new TimePickerFragment(){
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                // Do something with the time chosen by the user
-                // Restore preferences
-                SharedPreferences storage = getSharedPreferences(PREFS_NAME, MODE_MULTI_PROCESS);
-                SharedPreferences.Editor editor = storage.edit();
-
-                editor.putInt("alarmHourOfDay", hourOfDay);
-                editor.putInt("alarmMinuteOfDay", minute);
-                editor.commit();
-
-                //set daily pick alaram
-                AlarmController.setDailyVideoAlarm(context);
 
 
-            }
-        };
-        newFragment.show(getSupportFragmentManager(), "timePicker");
-
-    }
+//    public void showTimePickerDialog(View v) {
+//        DialogFragment newFragment = new TimePickerFragment(){
+//            @Override
+//            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//                // Do something with the time chosen by the user
+//                // Restore preferences
+//                SharedPreferences storage = getSharedPreferences(PREFS_NAME, MODE_MULTI_PROCESS);
+//                SharedPreferences.Editor editor = storage.edit();
+//
+//                editor.putInt("alarmHourOfDay", hourOfDay);
+//                editor.putInt("alarmMinuteOfDay", minute);
+//                editor.commit();
+//
+//                //set daily pick alaram
+//                AlarmController.setDailyVideoAlarm(context);
+//
+//
+//            }
+//        };
+//        newFragment.show(getSupportFragmentManager(), "timePicker");
+//
+//    }
 
 
 
@@ -111,7 +136,8 @@ public class HomeActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            MenuFunctions.settings(this);
+            Intent settingsIntent = new Intent(context , SettingsActivity.class);
+            context.startActivity(settingsIntent);
             return true;
         }
         return super.onOptionsItemSelected(item);

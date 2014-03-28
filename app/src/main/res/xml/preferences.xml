@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:key="daily_notification_key"
+        android:title="@string/daily_notification_switch_title"
+        android:summary="@string/daily_notification_switch_summary"
+        android:defaultValue="true" />
+
+    <com.mardox.betterlife.app.utils.TimePreference
+        android:enabled="true"
+        android:key="daily_notification_time"
+        android:title="@string/set_daily_alarm"/>
+
+
+</PreferenceScreen>

@@ -6,5 +6,10 @@
     <string name="today_message">Speak Slowly</string>
     <string name="settings">Settings</string>
     <string name="today_message_description">Try to speak more slowly. Introduce pauses to your sentences. This will help you to mainten the attention and keep people interested in what you have to say.</string>
+    <string name="daily_notification_switch_title">Daily Notification</string>
+    <string name="daily_notification_switch_summary">Turn daily notification ON or OFF</string>
+    <string name="set">Set</string>
+    <string name="cancel">Cancel</string>
+    <string name="set_daily_alarm">Set Daily Alarm</string>
 
 </resources>

@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.mardox.betterlife.app.DailyConceptService;
@@ -40,10 +41,14 @@ public class AlarmController {
         Calendar alaramCalendar = Calendar.getInstance();
         Calendar nowCalendar = Calendar.getInstance();
 
-        SharedPreferences storage = context.getSharedPreferences(HomeActivity.PREFS_NAME, Context.MODE_MULTI_PROCESS );
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String[] pieces = prefs.getString("daily_notification_time","08:00").split(":");
 
-        int hourOfDay = storage.getInt("alarmHourOfDay", 17);
-        int minuteOfDay = storage.getInt("alarmMinuteOfDay", 00);
+
+        int hourOfDay = Integer.parseInt(pieces[0]);
+        int minuteOfDay =  Integer.parseInt(pieces[1]);
+
+        Log.i(HomeActivity.TAG,"Alarm Change :"+hourOfDay + " and " + minuteOfDay);
 
         alaramCalendar.setTimeInMillis(System.currentTimeMillis());
         alaramCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);

@@ -28,6 +28,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".SettingsActivity"></activity>
+
         <receiver android:name="com.mardox.betterlife.app.WidgetProvider" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
