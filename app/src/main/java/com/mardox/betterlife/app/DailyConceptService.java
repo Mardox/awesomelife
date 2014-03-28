@@ -22,7 +22,7 @@ public class DailyConceptService extends BroadcastReceiver {
             @Override
             public void run() {
                 BackEnd backendConnection = new BackEnd();
-                backendConnection.getConcept(mContext);
+                backendConnection.getConcept(mContext, true);
             }
         }).start();
 

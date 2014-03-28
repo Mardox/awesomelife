@@ -39,7 +39,7 @@ public class BackEnd {
     static String packageName;
     static Context contextVariable;
 
-    public void getConcept(Context context){
+    public void getConcept(Context context, boolean notificationEnforced){
 
         ApplicationInfo packageInfo = context.getApplicationContext().getApplicationInfo();
         packageName = packageInfo.packageName;
@@ -95,7 +95,7 @@ public class BackEnd {
 
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(contextVariable);
 
-            if(sharedPref.getBoolean(SettingsActivity.KEY_PREF_DAILY_NOTIFICATION_SWITCH, true)) {
+            if(notificationEnforced && sharedPref.getBoolean(SettingsActivity.KEY_PREF_DAILY_NOTIFICATION_SWITCH, true)) {
                 Notification.sendNotification(contextVariable, push);
                 Log.i(HomeActivity.TAG,title);
             }

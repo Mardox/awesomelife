@@ -1,11 +1,15 @@
 package com.mardox.betterlife.app;
 
 
+import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -71,41 +75,52 @@ public class HomeActivity extends ActionBarActivity {
         //set daily pick alarm, no forced update
         AlarmController.setDailyVideoAlarm(context, false);
 
+        startBackendCall();
+
     }
-
-
 
 
     @Override
     protected void onStart(){
         super.onStart();
         EasyTracker.getInstance(this).activityStart(this);  // Add this method.
-//        setTheConcept();
-
-        Thread background = new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-
-                    try {
-                        //If the current concept already exists
-                        if(storage.getString("todayConceptTitle", "").equals("")) {
-                            BackEnd backendConnection = new BackEnd();
-                            backendConnection.getConcept(context);
-                        }
-
-                        Message msg = new Message();
-                        handler.sendMessage(msg);
-                    } catch (Exception e) {
-                        Log.v("Error", e.toString());
-                    }
-
-            }
-        });
-
-        background.start();
-
     };
+
+
+    private void startBackendCall(){
+
+        //Check if the internet connection is available
+        if(!isOnline()){
+            networkErrorDialog();
+            return;
+        }
+
+
+        backendCall.start();
+
+    }
+
+    Thread backendCall = new Thread(new Runnable() {
+
+        @Override
+        public void run() {
+
+            try {
+                //If the current concept already exists
+                if(storage.getString("todayConceptTitle", "").equals("")) {
+                    BackEnd backendConnection = new BackEnd();
+                    //get the new concept from the backend without the notification trigger
+                    backendConnection.getConcept(context, false);
+                }
+
+                Message msg = new Message();
+                handler.sendMessage(msg);
+            } catch (Exception e) {
+                Log.v("Error", e.toString());
+            }
+
+        }
+    });
 
 
     @Override
@@ -123,60 +138,38 @@ public class HomeActivity extends ActionBarActivity {
         EasyTracker.getInstance(this).activityStop(this);  // Add this method.
     }
 
-    private void setTheConcept() {
 
-        runOnUiThread(new Runnable(){
-            public void run() {
-                //If there are stories, add them to the table
-                if(storage.getString("todayConceptTitle", "").equals("")){
-                    BackEnd backendConnection = new BackEnd();
-                    backendConnection.getConcept(context);
-                }
+    /**
+     * Check if Internet connectuion is available
+     */
 
-                conceptSubtitleTextView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        description = storage.getString("todayConceptDescription", "");
-                        conceptSubtitleTextView.setText(description);
-                    }
-                });
-
-                conceptTitleTextView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        title = storage.getString("todayConceptTitle", "");
-                        conceptTitleTextView.setText(title);
-                    }
-                });
-            }
-        });
+    public boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        }
+        return false;
     }
 
 
+    /**
+     * Network connection error dialog
+     */
+    private void networkErrorDialog() {
 
-//    public void showTimePickerDialog(View v) {
-//        DialogFragment newFragment = new TimePickerFragment(){
-//            @Override
-//            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-//                // Do something with the time chosen by the user
-//                // Restore preferences
-//                SharedPreferences storage = getSharedPreferences(PREFS_NAME, MODE_MULTI_PROCESS);
-//                SharedPreferences.Editor editor = storage.edit();
-//
-//                editor.putInt("alarmHourOfDay", hourOfDay);
-//                editor.putInt("alarmMinuteOfDay", minute);
-//                editor.commit();
-//
-//                //set daily pick alaram
-//                AlarmController.setDailyVideoAlarm(context);
-//
-//
-//            }
-//        };
-//        newFragment.show(getSupportFragmentManager(), "timePicker");
-//
-//    }
-
+        //Create the upgrade dialog
+        new AlertDialog.Builder(context)
+                .setTitle(getString(R.string.error_dialog_title))
+                .setMessage(R.string.no_internet_message)
+                .setPositiveButton(R.string.retry_button, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // reset the request
+                        startBackendCall();
+                    }
+                })
+                .show();
+    }
 
 
     @Override
