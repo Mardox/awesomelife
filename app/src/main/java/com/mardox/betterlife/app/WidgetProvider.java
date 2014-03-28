@@ -33,7 +33,7 @@ public class WidgetProvider extends AppWidgetProvider {
             // Get the layout for the App Widget and attach an on-click listener
             // to the button
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
-            views.setOnClickPendingIntent(R.id.widget_main, pendingIntent);
+            views.setOnClickPendingIntent(R.id.widget_main_layout, pendingIntent);
             views.setTextViewText(R.id.widget_main, title);
 
             //Change the widget text color randomly
