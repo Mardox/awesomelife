@@ -1,17 +1,22 @@
 package com.mardox.betterlife.app;
 
+
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.mardox.betterlife.app.utils.AlarmController;
 import com.mardox.betterlife.app.utils.MenuFunctions;
+import com.mardox.betterlife.app.utils.TimePickerFragment;
 
 
 public class HomeActivity extends ActionBarActivity {
@@ -54,14 +59,41 @@ public class HomeActivity extends ActionBarActivity {
 
 
         //set daily pick alaram
-        AlarmController.dailyVideoAlarm(context);
+        AlarmController.setDailyVideoAlarm(context);
 
 
         //Dismiss the notifications
         NotificationManager manager = (NotificationManager) getSystemService(Service.NOTIFICATION_SERVICE);
         manager.cancel(1);
 
+
+
     }
+
+
+    public void showTimePickerDialog(View v) {
+        DialogFragment newFragment = new TimePickerFragment(){
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                // Do something with the time chosen by the user
+                // Restore preferences
+                SharedPreferences storage = getSharedPreferences(PREFS_NAME, MODE_MULTI_PROCESS);
+                SharedPreferences.Editor editor = storage.edit();
+
+                editor.putInt("alarmHourOfDay", hourOfDay);
+                editor.putInt("alarmMinuteOfDay", minute);
+                editor.commit();
+
+                //set daily pick alaram
+                AlarmController.setDailyVideoAlarm(context);
+
+
+            }
+        };
+        newFragment.show(getSupportFragmentManager(), "timePicker");
+
+    }
+
 
 
     @Override

@@ -2,5 +2,6 @@
 <resources>
     <string-array name="settings">
         <item> Daily Notifications</item>
+        <item> Set Notification Time</item>
     </string-array>
 </resources>

@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.mardox.betterlife.app.DailyConceptService;
@@ -19,7 +20,7 @@ public class AlarmController {
 
 
     public static final int TIMER_1 = 1;
-    public static void dailyVideoAlarm(Context context){
+    public static void setDailyVideoAlarm(Context context){
 
         long _alarmFinal;
 
@@ -39,9 +40,14 @@ public class AlarmController {
         Calendar alaramCalendar = Calendar.getInstance();
         Calendar nowCalendar = Calendar.getInstance();
 
+        SharedPreferences storage = context.getSharedPreferences(HomeActivity.PREFS_NAME, Context.MODE_MULTI_PROCESS );
+
+        int hourOfDay = storage.getInt("alarmHourOfDay", 17);
+        int minuteOfDay = storage.getInt("alarmMinuteOfDay", 00);
+
         alaramCalendar.setTimeInMillis(System.currentTimeMillis());
-        alaramCalendar.set(Calendar.HOUR_OF_DAY, 00);
-        alaramCalendar.set(Calendar.MINUTE, 39);
+        alaramCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        alaramCalendar.set(Calendar.MINUTE, minuteOfDay);
 
         //Make sure alarm is set for the next day
         if(alaramCalendar.getTimeInMillis() <= nowCalendar.getTimeInMillis())

@@ -16,7 +16,7 @@ public class BaseBootReceiver extends BroadcastReceiver {
 
         if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
             Log.i("Daily","function was triggered");
-            AlarmController.dailyVideoAlarm(context);
+            AlarmController.setDailyVideoAlarm(context);
 
         }
 

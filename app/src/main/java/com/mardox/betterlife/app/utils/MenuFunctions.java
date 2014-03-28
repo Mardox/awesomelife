@@ -15,6 +15,7 @@ import java.util.ArrayList;
  */
 public class MenuFunctions {
 
+
     public static boolean settings(Context context){
 
         final ArrayList mSelectedItems  = new ArrayList();  // Where we track the selected items
@@ -66,3 +67,4 @@ public class MenuFunctions {
     }
 
 }
+
