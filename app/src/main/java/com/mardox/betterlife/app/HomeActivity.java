@@ -7,13 +7,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mardox.betterlife.app.utils.AlarmController;
+import com.mardox.betterlife.app.utils.BackEnd;
 
 
 public class HomeActivity extends ActionBarActivity {
@@ -29,6 +33,8 @@ public class HomeActivity extends ActionBarActivity {
 
     TextView conceptTitleTextView ;
     TextView conceptSubtitleTextView ;
+
+    private static Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,17 +53,58 @@ public class HomeActivity extends ActionBarActivity {
             editor.commit();
         }
 
-        //set daily pick alaram
+
+        conceptTitleTextView = (TextView) findViewById(R.id.concept_main_title);
+        conceptSubtitleTextView = (TextView) findViewById(R.id.concept_main_subtitle);
+
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                description = storage.getString("todayConceptDescription", "");
+                conceptSubtitleTextView.setText(description);
+
+                title = storage.getString("todayConceptTitle", "");
+                conceptTitleTextView.setText(title);
+            }
+        };
+
+        //set daily pick alarm, no forced update
         AlarmController.setDailyVideoAlarm(context, false);
 
     }
+
+
 
 
     @Override
     protected void onStart(){
         super.onStart();
         EasyTracker.getInstance(this).activityStart(this);  // Add this method.
-        setTheConcept();
+//        setTheConcept();
+
+        Thread background = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+
+                    try {
+                        //If the current concept already exists
+                        if(storage.getString("todayConceptTitle", "").equals("")) {
+                            BackEnd backendConnection = new BackEnd();
+                            backendConnection.getConcept(context);
+                        }
+
+                        Message msg = new Message();
+                        handler.sendMessage(msg);
+                    } catch (Exception e) {
+                        Log.v("Error", e.toString());
+                    }
+
+            }
+        });
+
+        background.start();
+
     };
 
 
@@ -76,20 +123,34 @@ public class HomeActivity extends ActionBarActivity {
         EasyTracker.getInstance(this).activityStop(this);  // Add this method.
     }
 
-    private void setTheConcept(){
+    private void setTheConcept() {
 
-        title = storage.getString("todayConceptTitle", "Hello");
-        description = storage.getString("todayConceptDescription", "Main Subtitle");
+        runOnUiThread(new Runnable(){
+            public void run() {
+                //If there are stories, add them to the table
+                if(storage.getString("todayConceptTitle", "").equals("")){
+                    BackEnd backendConnection = new BackEnd();
+                    backendConnection.getConcept(context);
+                }
 
+                conceptSubtitleTextView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        description = storage.getString("todayConceptDescription", "");
+                        conceptSubtitleTextView.setText(description);
+                    }
+                });
 
-        conceptTitleTextView = (TextView) findViewById(R.id.concept_main_title);
-        conceptSubtitleTextView = (TextView) findViewById(R.id.concept_main_subtitle);
-
-        conceptTitleTextView.setText(title);
-        conceptSubtitleTextView.setText(description);
-
+                conceptTitleTextView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        title = storage.getString("todayConceptTitle", "");
+                        conceptTitleTextView.setText(title);
+                    }
+                });
+            }
+        });
     }
-
 
 
 

@@ -35,7 +35,14 @@ public class WidgetProvider extends AppWidgetProvider {
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
             views.setOnClickPendingIntent(R.id.widget_main, pendingIntent);
             views.setTextViewText(R.id.widget_main, title);
-            views.setTextViewText(R.id.widget_sub, description);
+
+            //Change the widget text color randomly
+//            Random rnd = new Random();
+//            int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+//            views.setTextColor(R.id.widget_main,color);
+
+
+//            views.setTextViewText(R.id.widget_sub, description);
 
             //Tell the AppWidgetManager to perform an update on the current app widget
             appWidgetManager.updateAppWidget(appWidgetId, views);
