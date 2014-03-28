@@ -1,21 +1,38 @@
 package com.mardox.betterlife.app;
 
-import android.support.v7.app.ActionBarActivity;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.mardox.betterlife.app.utils.AlarmController;
+import com.mardox.betterlife.app.utils.BaseBootReceiver;
 import com.mardox.betterlife.app.utils.MenuFunctions;
 
 
 public class HomeActivity extends ActionBarActivity {
 
     public static final String PREFS_NAME = "BetterLife" ;
+    public static final String TAG = "BetterLife";
+
+    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+
+        //Start the daily video alarm - reboot persistant
+        ComponentName receiver = new ComponentName(context, BaseBootReceiver.class);
+        PackageManager pm = context.getPackageManager();
+
+
+        //set daily pick alaram
+        AlarmController.dailyVideoAlarm(context);
     }
 
 
