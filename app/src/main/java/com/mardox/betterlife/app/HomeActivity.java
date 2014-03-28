@@ -48,7 +48,7 @@ public class HomeActivity extends ActionBarActivity {
         }
 
         //set daily pick alaram
-        AlarmController.setDailyVideoAlarm(context);
+        AlarmController.setDailyVideoAlarm(context, false);
 
 
 

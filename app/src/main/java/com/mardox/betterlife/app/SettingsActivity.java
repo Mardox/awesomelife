@@ -31,7 +31,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
 
         }
 
-        AlarmController.setDailyVideoAlarm(this);
+        AlarmController.setDailyVideoAlarm(this, true);
 
         Log.i(HomeActivity.TAG,"Main Pref Change");
 
