@@ -54,7 +54,7 @@ public class BackEnd {
             Long firstLaunchDate = storage.getLong("firstLaunchDate", 0);
 
             //Calculate the day's # since the first launch
-            Long currentDay =( (System.currentTimeMillis() - firstLaunchDate)/(24 * 60 * 60 * 1000));
+            Long currentDay = ( (System.currentTimeMillis() - firstLaunchDate)/(24 * 60 * 60 * 1000));
 
             //Build the query
             String query = "http://30daylabs.com/cloud/api/concept?day="+currentDay.toString()+"&format=json";
