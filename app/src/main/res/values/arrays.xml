@@ -4,4 +4,9 @@
         <item> Daily Notifications</item>
         <item> Set Notification Time</item>
     </string-array>
+    <string-array name="rating_response">
+        <item>Rate Now!</item>
+        <item>Ask Me Later</item>
+        <item>No Thanks</item>
+    </string-array>
 </resources>

@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -61,6 +62,7 @@ public class HomeActivity extends ActionBarActivity {
         conceptTitleTextView = (TextView) findViewById(R.id.concept_main_title);
         conceptSubtitleTextView = (TextView) findViewById(R.id.concept_main_subtitle);
 
+        //Handler to update UI after the backend thread
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -75,7 +77,11 @@ public class HomeActivity extends ActionBarActivity {
         //set daily pick alarm, no forced update
         AlarmController.setDailyVideoAlarm(context, false);
 
+        //Get the first concept
         startBackendCall();
+
+        //App rate offer
+        appOfferDialog();
 
     }
 
@@ -94,12 +100,11 @@ public class HomeActivity extends ActionBarActivity {
             networkErrorDialog();
             return;
         }
-
-
         backendCall.start();
 
     }
 
+    //Thread to get the first concept upon the first launch of the app
     Thread backendCall = new Thread(new Runnable() {
 
         @Override
@@ -142,7 +147,6 @@ public class HomeActivity extends ActionBarActivity {
     /**
      * Check if Internet connectuion is available
      */
-
     public boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
@@ -170,6 +174,96 @@ public class HomeActivity extends ActionBarActivity {
                 })
                 .show();
     }
+
+
+
+    /**
+     * appOfferDialog Dialog
+     */
+    public void appOfferDialog() {
+
+        final int LAUNCHES_UNTIL_UPGRADE_PROMPT = 2;
+        final int DAYS_UNTIL_UPGRADE_PROMPT = 2;
+
+        SharedPreferences prefs = getSharedPreferences(HomeActivity.PREFS_NAME, MODE_MULTI_PROCESS);
+        Boolean dont_show_rate_again  = prefs.getBoolean("dontshowrateagain", false);
+
+
+        SharedPreferences.Editor editor = prefs.edit();
+
+        // Increment launch counter
+        long launch_count = prefs.getLong("launch_count", 0) + 1;
+        editor.putLong("launch_count", launch_count);
+
+        // Get date of first launch
+        Long firstLaunchDate = prefs.getLong("firstLaunchDate", 0);
+        if (firstLaunchDate == 0) {
+            firstLaunchDate = System.currentTimeMillis();
+            editor.putLong("firstLaunchDate", firstLaunchDate);
+        }
+
+
+        // Wait at least n days before opening
+        if (launch_count >= LAUNCHES_UNTIL_UPGRADE_PROMPT ) {
+            if (System.currentTimeMillis() >= firstLaunchDate +
+                    (DAYS_UNTIL_UPGRADE_PROMPT * 24 * 60 * 60 * 1000)) {
+
+                //generate a random number [1,2]
+                int randomDay = 1 + (int)(Math.random()*3);
+                if(randomDay == 1) {
+                    //Upgrade offer
+
+                }else if(!dont_show_rate_again && randomDay == 2){
+                    rateDialog(editor);
+                }
+
+            }
+        }
+
+        editor.commit();
+
+    }
+
+
+
+
+
+    private void rateDialog(final SharedPreferences.Editor editor){
+
+        final String APP_PNAME = getPackageName();
+
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.rate_offer_title))
+                .setItems(R.array.rating_response, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // The 'which' argument contains the index position
+                        // of the selected item
+                        switch (which) {
+                            case 0:
+                                //Rate Now
+                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + APP_PNAME)));
+                            case 1:
+                                //Rate Later
+                            case 2:
+                                //Never
+                                if (editor != null) {
+                                    editor.putBoolean("dontshowrateagain", true);
+                                    editor.commit();
+                                }
+                        }
+
+                    }
+
+                })
+                .setIcon(R.drawable.ic_action_dark_important)
+                .show();
+
+    }
+
+
+
+
+
 
 
     @Override
