@@ -7,7 +7,7 @@
         android:summary="@string/daily_notification_switch_summary"
         android:defaultValue="true" />
 
-    <com.mardox.betterlife.app.utils.TimePreference
+    <com.mardox.awesomelife.app.utils.TimePreference
         android:enabled="true"
         android:key="daily_notification_time"
         android:title="@string/set_daily_alarm"/>

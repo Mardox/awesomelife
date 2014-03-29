@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mardox.betterlife.app" >
+    package="com.mardox.awesomelife.app" >
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
@@ -19,7 +19,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.mardox.betterlife.app.HomeActivity"
+            android:name="com.mardox.awesomelife.app.HomeActivity"
             android:label="@string/app_name"
             android:launchMode= "singleInstance">
             <intent-filter>
@@ -31,7 +31,7 @@
 
         <activity android:name=".SettingsActivity"></activity>
 
-        <receiver android:name="com.mardox.betterlife.app.WidgetProvider" >
+        <receiver android:name="com.mardox.awesomelife.app.WidgetProvider" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -40,12 +40,12 @@
         </receiver>
 
 
-        <receiver android:name="com.mardox.betterlife.app.DailyConceptService"
+        <receiver android:name="com.mardox.awesomelife.app.DailyConceptService"
             android:enabled="true"
             android:process=":remote">
         </receiver>
 
-        <receiver android:name="com.mardox.betterlife.app.utils.BaseBootReceiver" >
+        <receiver android:name="com.mardox.awesomelife.app.utils.BaseBootReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED">
                 </action>
