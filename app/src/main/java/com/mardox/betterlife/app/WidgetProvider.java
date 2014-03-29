@@ -36,6 +36,7 @@ public class WidgetProvider extends AppWidgetProvider {
             views.setOnClickPendingIntent(R.id.widget_main_layout, pendingIntent);
             views.setTextViewText(R.id.widget_main, title);
 
+
             //Change the widget text color randomly
 //            Random rnd = new Random();
 //            int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
