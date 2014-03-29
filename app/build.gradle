@@ -10,9 +10,22 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+
+    signingConfigs {
+        release {
+            storeFile file("sign.keystore")
+            storePassword "pvs460"
+            keyAlias "mardox"
+            keyPassword "pvs460"
+        }
+    }
+
+
     buildTypes {
         release {
-            runProguard false
+            signingConfig signingConfigs.release
+            runProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
