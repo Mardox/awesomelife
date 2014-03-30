@@ -161,54 +161,63 @@ public class HomeActivity extends ActionBarActivity {
      */
     private void showOverLay(){
 
-        final Dialog step1;
 
-        step1 = new Dialog(context, android.R.style.Theme_Translucent_NoTitleBar);
-        step1.setContentView(R.layout.help_overlay_step_1);
-        LinearLayout firstLayout = (LinearLayout) step1.findViewById(R.id.overlayLayout);
-        firstLayout.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View arg0) {
-               step1.dismiss();
+        final Dialog step0 = new Dialog(context, android.R.style.Theme_Translucent_NoTitleBar);
+        step0.setContentView(R.layout.help_overlay_step_0);
+        LinearLayout introLayout = (LinearLayout) step0.findViewById(R.id.overlayLayout);
+        introLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
 
-               final Dialog step2 = new Dialog(context, android.R.style.Theme_Translucent_NoTitleBar);
-               step2.setContentView(R.layout.help_overlay_step_2);
-               LinearLayout firstLayout = (LinearLayout) step2.findViewById(R.id.overlayLayout);
-               firstLayout.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View arg0) {
-                       step2.dismiss();
+                final Dialog step1 = new Dialog(context, android.R.style.Theme_Translucent_NoTitleBar);
+                step1.setContentView(R.layout.help_overlay_step_1);
+                LinearLayout firstLayout = (LinearLayout) step1.findViewById(R.id.overlayLayout);
+                firstLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View arg0) {
 
-                       final Dialog step3 = new Dialog(context, android.R.style.Theme_Translucent_NoTitleBar);
-                       step3.setContentView(R.layout.help_overlay_step_3);
-                       LinearLayout firstLayout = (LinearLayout) step3.findViewById(R.id.overlayLayout);
-                       firstLayout.setOnClickListener(new View.OnClickListener() {
-                           @Override
-                           public void onClick(View arg0) {
-                               step3.dismiss();
-                               // We need an Editor object to make preference changes.
-                               // All objects are from android.context.Context
-                               SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-                               SharedPreferences.Editor editor = settings.edit();
-                               editor.putBoolean("helpOverlay", true);
+                        final Dialog step2 = new Dialog(context, android.R.style.Theme_Translucent_NoTitleBar);
+                        step2.setContentView(R.layout.help_overlay_step_2);
+                        LinearLayout secondLayout = (LinearLayout) step2.findViewById(R.id.overlayLayout);
+                        secondLayout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View arg0) {
 
-                               // Commit the edits!
-                               editor.commit();
+                                final Dialog step3 = new Dialog(context, android.R.style.Theme_Translucent_NoTitleBar);
+                                step3.setContentView(R.layout.help_overlay_step_3);
+                                LinearLayout thirdLayout = (LinearLayout) step3.findViewById(R.id.overlayLayout);
+                                thirdLayout.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View arg0) {
+                                        step0.dismiss();
+                                        step1.dismiss();
+                                        step2.dismiss();
+                                        step3.dismiss();
+                                        // We need an Editor object to make preference changes.
+                                        // All objects are from android.context.Context
+                                        SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = settings.edit();
+                                        editor.putBoolean("helpOverlay", true);
 
-                           }
-                       });
+                                        // Commit the edits!
+                                        editor.commit();
 
-                       step3.show();
-                   }
-               });
+                                    }
+                                });
 
-               step2.show();
+                                step3.show();
+                            }
+                        });
 
-           }
-       });
+                        step2.show();
+                    }
+                });
 
-       step1.show();
+                step1.show();
+            }
 
+        });
+        step0.show();
     }
 
 
@@ -355,6 +364,8 @@ public class HomeActivity extends ActionBarActivity {
             Intent settingsIntent = new Intent(context , SettingsActivity.class);
             context.startActivity(settingsIntent);
             return true;
+        }else if (id == R.id.action_help) {
+            showOverLay();
         }
         return super.onOptionsItemSelected(item);
     }

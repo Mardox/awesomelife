@@ -15,5 +15,6 @@
     <string name="no_internet_message">No Internet Connection!</string>
     <string name="retry_button">Retry</string>
     <string name="rate_offer_title">Rate Our App!</string>
+    <string name="action_help">Help</string>
 
 </resources>
