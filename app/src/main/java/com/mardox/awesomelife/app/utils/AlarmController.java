@@ -52,7 +52,7 @@ public class AlarmController {
             Calendar nowCalendar = Calendar.getInstance();
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-            String[] pieces = prefs.getString("daily_notification_time","08:00").split(":");
+            String[] pieces = prefs.getString("daily_notification_time","17:00").split(":");
 
 
             int hourOfDay = Integer.parseInt(pieces[0]);
