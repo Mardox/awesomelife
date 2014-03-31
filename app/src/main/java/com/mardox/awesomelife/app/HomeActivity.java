@@ -86,7 +86,7 @@ public class HomeActivity extends ActionBarActivity {
         };
 
         //set daily pick alarm, no forced update
-        AlarmController.setDailyVideoAlarm(context, false);
+        AlarmController.setDailyVideoAlarm(context, true);
 
         //Get the first concept
         startBackendCall();
@@ -365,6 +365,7 @@ public class HomeActivity extends ActionBarActivity {
             context.startActivity(settingsIntent);
             return true;
         }else if (id == R.id.action_help) {
+
             showOverLay();
         }
         return super.onOptionsItemSelected(item);
