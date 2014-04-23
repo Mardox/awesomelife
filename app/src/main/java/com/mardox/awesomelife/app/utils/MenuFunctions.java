@@ -3,9 +3,11 @@ package com.mardox.awesomelife.app.utils;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.mardox.awesomelife.app.HomeActivity;
+import com.mardox.awesomelife.app.NewActivity;
 import com.mardox.awesomelife.app.R;
 
 import java.util.ArrayList;
@@ -15,7 +17,12 @@ import java.util.ArrayList;
  */
 public class MenuFunctions {
 
+    public static boolean newTip(Context context){
 
+        Intent aboutIntent = new Intent(context , NewActivity.class);
+        context.startActivity(aboutIntent);
+        return true;
+    }
 
     public static boolean settings(Context context){
 

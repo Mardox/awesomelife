@@ -23,8 +23,8 @@ public class WidgetProvider extends AppWidgetProvider {
             int appWidgetId = appWidgetIds[i];
 
             SharedPreferences storage = context.getSharedPreferences(HomeActivity.PREFS_NAME, context.MODE_MULTI_PROCESS);
-            String title = storage.getString("todayConceptTitle", "Hello");
-            String description = storage.getString("todayConceptDescription", "Main Subtitle");
+            String title = storage.getString("todayConceptTitle", "Relax");
+            String description = storage.getString("todayConceptDescription", "The tip of the day will come out soon!");
 
             // Create an Intent to launch ExampleActivity
             Intent intent = new Intent(context, HomeActivity.class);
