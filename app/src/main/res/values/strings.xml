@@ -20,5 +20,6 @@
     <string name="title_activity_new">NewActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_list">ListActivity</string>
+    <string name="action_list">Tips List</string>
 
 </resources>

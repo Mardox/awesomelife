@@ -42,6 +42,20 @@ import com.mardox.awesomelife.app.utils.AlarmController;
 import com.mardox.awesomelife.app.utils.BackEnd;
 import com.mardox.awesomelife.app.utils.MenuFunctions;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class HomeActivity extends Activity implements
         ConnectionCallbacks, OnConnectionFailedListener,
         ResultCallback<People.LoadPeopleResult>, View.OnClickListener {
@@ -55,6 +69,9 @@ public class HomeActivity extends Activity implements
 
     String title ;
     String description ;
+
+    String userID;
+    String emailAddress;
 
     TextView conceptTitleTextView ;
     TextView conceptSubtitleTextView ;
@@ -306,9 +323,10 @@ public class HomeActivity extends Activity implements
         // Retrieve some profile information to personalize our app for the user.
         Person currentUser = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
 
-//        mStatus.setText("Signed in as"+
-//                currentUser.getDisplayName());
-        currentUser.getId();
+        userID = currentUser.getId();
+        emailAddress = Plus.AccountApi.getAccountName(mGoogleApiClient);
+
+        postUserData.run();
 
         Plus.PeopleApi.loadVisible(mGoogleApiClient, null)
                 .setResultCallback(this);
@@ -677,6 +695,14 @@ public class HomeActivity extends Activity implements
                     resolveSignInError();
                 }
                 return true;
+            case R.id.menu_action_list:
+                if (mGoogleApiClient.isConnected()) {
+                    //Show intent
+                    MenuFunctions.listTip(context);
+                }else {
+                    resolveSignInError();
+                }
+                return true;
             case  R.id.action_settings:
                 Intent settingsIntent = new Intent(context , SettingsActivity.class);
                 context.startActivity(settingsIntent);
@@ -688,6 +714,36 @@ public class HomeActivity extends Activity implements
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
+
+    Thread postUserData = new Thread( new Runnable() {
+
+        @Override
+        public void run() {
+
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost("http://30daylabs.com/cloud/api/user");
+
+
+            // Create a new HttpClient and Post Header
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+            nameValuePairs.add(new BasicNameValuePair("email", emailAddress));
+            nameValuePairs.add(new BasicNameValuePair("uid", userID));
+
+            try {
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                HttpResponse response = httpclient.execute(httppost);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    });
 
 
 }

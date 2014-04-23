@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.mardox.awesomelife.app.HomeActivity;
+import com.mardox.awesomelife.app.ListActivity;
 import com.mardox.awesomelife.app.NewActivity;
 import com.mardox.awesomelife.app.R;
 
@@ -20,6 +21,13 @@ public class MenuFunctions {
     public static boolean newTip(Context context){
 
         Intent aboutIntent = new Intent(context , NewActivity.class);
+        context.startActivity(aboutIntent);
+        return true;
+    }
+
+    public static boolean listTip(Context context){
+
+        Intent aboutIntent = new Intent(context , ListActivity.class);
         context.startActivity(aboutIntent);
         return true;
     }

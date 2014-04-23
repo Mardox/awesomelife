@@ -8,6 +8,11 @@
         android:icon="@drawable/ic_action_new"
         android:showAsAction="collapseActionView|always" />
 
+    <item android:id="@+id/menu_action_list"
+        android:title="@string/action_list"
+        android:icon="@drawable/ic_action_view_as_list"
+        android:showAsAction="collapseActionView|always" />
+
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"

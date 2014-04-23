@@ -1,0 +1,176 @@
+Current Alarm Manager state:
+ 
+  Realtime wakeup (now=2014-04-01 10:36:28):
+  RTC_WAKEUP #21: Alarm{528e3224 type 0 com.google.android.partnersetup}
+    type=0 when=+6d20h25m9s669ms repeatInterval=0 count=0
+    operation=PendingIntent{528cfcd8: PendingIntentRecord{529ffedc com.google.android.partnersetup startService}}
+  RTC_WAKEUP #20: Alarm{52b74ca0 type 0 com.google.android.gsf}
+    type=0 when=+3d12h38m57s400ms repeatInterval=542728000 count=0
+    operation=PendingIntent{52b74c98: PendingIntentRecord{52a05c48 com.google.android.gsf broadcastIntent}}
+  RTC_WAKEUP #19: Alarm{52a49e38 type 0 com.google.android.gms}
+    type=0 when=+2d10h54m7s213ms repeatInterval=0 count=0
+    operation=PendingIntent{52b32d08: PendingIntentRecord{52ba0654 com.google.android.gms broadcastIntent}}
+  RTC_WAKEUP #18: Alarm{52a157ec type 0 com.mardox.awesomelife.app}
+    type=0 when=+22h23m56s691ms repeatInterval=86400000 count=0
+    operation=PendingIntent{52a18f90: PendingIntentRecord{529ea448 com.mardox.awesomelife.app broadcastIntent}}
+  RTC_WAKEUP #17: Alarm{52ba543c type 0 com.android.vending}
+    type=0 when=+22h0m56s506ms repeatInterval=0 count=0
+    operation=PendingIntent{5284a2e8: PendingIntentRecord{52ba56e4 com.android.vending startService}}
+  RTC_WAKEUP #16: Alarm{52b39ee8 type 0 com.android.providers.calendar}
+    type=0 when=+18h26m42s186ms repeatInterval=0 count=0
+    operation=PendingIntent{52756044: PendingIntentRecord{52b39e70 com.android.providers.calendar broadcastIntent}}
+  RTC_WAKEUP #15: Alarm{529ea8b8 type 0 com.google.android.gms}
+    type=0 when=+17h43m59s30ms repeatInterval=86400000 count=0
+    operation=PendingIntent{52a24cc4: PendingIntentRecord{52a10828 com.google.android.gms startService}}
+  RTC_WAKEUP #14: Alarm{5287e660 type 0 com.google.android.gms}
+    type=0 when=+17h36m3s231ms repeatInterval=0 count=0
+    operation=PendingIntent{529f744c: PendingIntentRecord{529e5de8 com.google.android.gms broadcastIntent}}
+  RTC_WAKEUP #13: Alarm{52a0dfbc type 0 com.thirtydaylabs.pksongs}
+    type=0 when=+6h24m14s219ms repeatInterval=86400000 count=0
+    operation=PendingIntent{52a0dfb4: PendingIntentRecord{52a0decc com.thirtydaylabs.pksongs broadcastIntent}}
+  RTC_WAKEUP #12: Alarm{52a28640 type 0 com.thirtydaylabs.ghanamovies}
+    type=0 when=+6h24m14s135ms repeatInterval=86400000 count=0
+    operation=PendingIntent{52a28638: PendingIntentRecord{52a28550 com.thirtydaylabs.ghanamovies broadcastIntent}}
+  RTC_WAKEUP #11: Alarm{52b19720 type 0 com.thirtydaylabs.hausamovies}
+    type=0 when=+6h24m13s994ms repeatInterval=86400000 count=0
+    operation=PendingIntent{52b19718: PendingIntentRecord{52b19630 com.thirtydaylabs.hausamovies broadcastIntent}}
+  RTC_WAKEUP #10: Alarm{52a33510 type 0 com.thirtydaylabs.electronicstutorials}
+    type=0 when=+6h24m13s895ms repeatInterval=86400000 count=0
+    operation=PendingIntent{527547d4: PendingIntentRecord{52a33430 com.thirtydaylabs.electronicstutorials broadcastIntent}}
+  RTC_WAKEUP #9: Alarm{52b91b04 type 0 com.thirtydaylabs.hindimovies}
+    type=0 when=+6h24m13s789ms repeatInterval=86400000 count=0
+    operation=PendingIntent{52781ab8: PendingIntentRecord{52b91a4c com.thirtydaylabs.hindimovies broadcastIntent}}
+  RTC_WAKEUP #8: Alarm{52a126f0 type 0 com.thirtydaylabs.snookertipsandtricks}
+    type=0 when=+6h24m13s618ms repeatInterval=86400000 count=0
+    operation=PendingIntent{529cb43c: PendingIntentRecord{52a12638 com.thirtydaylabs.snookertipsandtricks broadcastIntent}}
+  RTC_WAKEUP #7: Alarm{52a39d94 type 0 com.thirtydaylabs.koreandrama}
+    type=0 when=+6h24m13s400ms repeatInterval=86400000 count=0
+    operation=PendingIntent{527c9cf8: PendingIntentRecord{52a39cb4 com.thirtydaylabs.koreandrama broadcastIntent}}
+  RTC_WAKEUP #6: Alarm{52b2e540 type 0 com.thirtydaylabs.karatevideolessons}
+    type=0 when=+6h24m13s160ms repeatInterval=86400000 count=0
+    operation=PendingIntent{528e4828: PendingIntentRecord{52b8ed8c com.thirtydaylabs.karatevideolessons broadcastIntent}}
+  RTC_WAKEUP #5: Alarm{529c9290 type 0 com.thirtydaylabs.nigerianmovies}
+    type=0 when=+6h24m13s40ms repeatInterval=86400000 count=0
+    operation=PendingIntent{52a462b8: PendingIntentRecord{529c91d8 com.thirtydaylabs.nigerianmovies broadcastIntent}}
+  RTC_WAKEUP #4: Alarm{528e0aac type 0 com.thirtydaylabs.myanmarmovies}
+    type=0 when=+6h24m12s933ms repeatInterval=86400000 count=0
+    operation=PendingIntent{529ed3e8: PendingIntentRecord{528e0a08 com.thirtydaylabs.myanmarmovies broadcastIntent}}
+  RTC_WAKEUP #3: Alarm{5278eae4 type 0 com.thirtydaylabs.mechanicalengineering}
+    type=0 when=+6h24m12s798ms repeatInterval=86400000 count=0
+    operation=PendingIntent{528ebee0: PendingIntentRecord{52b9fe94 com.thirtydaylabs.mechanicalengineering broadcastIntent}}
+  RTC_WAKEUP #2: Alarm{52b8f230 type 0 com.google.android.googlequicksearchbox}
+    type=0 when=+40m14s50ms repeatInterval=0 count=0
+    operation=PendingIntent{52715ef0: PendingIntentRecord{52a171c8 com.google.android.googlequicksearchbox startService}}
+  RTC_WAKEUP #1: Alarm{52b856b4 type 0 com.google.android.gms}
+    type=0 when=+39m40s799ms repeatInterval=86400000 count=16160
+    operation=PendingIntent{52820a2c: PendingIntentRecord{52b8563c com.google.android.gms startService}}
+  RTC_WAKEUP #0: Alarm{52a37314 type 0 com.google.android.gsf}
+    type=0 when=+5m54s505ms repeatInterval=1800000 count=0
+    operation=PendingIntent{529f89a0: PendingIntentRecord{52851aa8 com.google.android.gsf broadcastIntent}}
+  RTC #3: Alarm{52b89f50 type 1 com.google.android.gms}
+    type=1 when=+20h25m17s728ms repeatInterval=0 count=0
+    operation=PendingIntent{5278b4c4: PendingIntentRecord{52b89ed8 com.google.android.gms broadcastIntent}}
+  RTC #2: Alarm{52848978 type 1 android}
+    type=1 when=+13h23m31s999ms repeatInterval=0 count=0
+    operation=PendingIntent{52849f90: PendingIntentRecord{5286ecd4 android broadcastIntent}}
+  RTC #1: Alarm{5289d338 type 1 com.android.calendar}
+    type=1 when=+13h23m31s999ms repeatInterval=0 count=0
+    operation=PendingIntent{52887eac: PendingIntentRecord{52a4fec8 com.android.calendar broadcastIntent}}
+  RTC #0: Alarm{529cbb78 type 1 com.google.android.gms}
+    type=1 when=+3m55s550ms repeatInterval=0 count=0
+    operation=PendingIntent{529fa30c: PendingIntentRecord{529cbb28 com.google.android.gms broadcastIntent}}
+ 
+  Elapsed realtime wakeup (now=+3h35m19s214ms):
+  ELAPSED_WAKEUP #11: Alarm{52a458f4 type 2 com.google.android.gms}
+    type=2 when=+21d0h17m15s432ms repeatInterval=0 count=0
+    operation=PendingIntent{528c35f0: PendingIntentRecord{52b3e0e0 com.google.android.gms startService}}
+  ELAPSED_WAKEUP #10: Alarm{529e7950 type 2 com.google.android.gms}
+    type=2 when=+21d0h1m31s702ms repeatInterval=0 count=0
+    operation=PendingIntent{529eb484: PendingIntentRecord{529e95f8 com.google.android.gms startService}}
+  ELAPSED_WAKEUP #9: Alarm{52b3e08c type 2 com.google.android.gms}
+    type=2 when=+21d0h1m31s324ms repeatInterval=0 count=0
+    operation=PendingIntent{52b35930: PendingIntentRecord{52ba0460 com.google.android.gms startService}}
+  ELAPSED_WAKEUP #8: Alarm{52b1d0e4 type 2 com.google.android.gms}
+    type=2 when=+21d0h1m30s929ms repeatInterval=0 count=0
+    operation=PendingIntent{52b1d0dc: PendingIntentRecord{52b1d03c com.google.android.gms startService}}
+  ELAPSED_WAKEUP #7: Alarm{52b15bc4 type 2 com.google.android.apps.plus}
+    type=2 when=+1d9h9m40s786ms repeatInterval=43200000 count=0
+    operation=PendingIntent{528b91ec: PendingIntentRecord{52a2b738 com.google.android.apps.plus broadcastIntent}}
+  ELAPSED_WAKEUP #6: Alarm{528ee968 type 2 com.google.android.googlequicksearchbox}
+    type=2 when=+8h43m33s254ms repeatInterval=0 count=0
+    operation=PendingIntent{528c2da0: PendingIntentRecord{52b3cae0 com.google.android.googlequicksearchbox startService}}
+  ELAPSED_WAKEUP #5: Alarm{52ba06f8 type 2 android}
+    type=2 when=+8h39m40s786ms repeatInterval=43200000 count=0
+    operation=PendingIntent{52ba06f0: PendingIntentRecord{52ba06a0 android broadcastIntent}}
+  ELAPSED_WAKEUP #4: Alarm{52a18ea0 type 2 android}
+    type=2 when=+7h56m12s278ms repeatInterval=0 count=0
+    operation=PendingIntent{52a17cf4: PendingIntentRecord{52a17ca4 android broadcastIntent}}
+  ELAPSED_WAKEUP #3: Alarm{52b75dbc type 2 android}
+    type=2 when=+40m26s989ms repeatInterval=0 count=0
+    operation=PendingIntent{52889120: PendingIntentRecord{52884f4c android broadcastIntent}}
+  ELAPSED_WAKEUP #2: Alarm{5296f98c type 2 com.google.android.gms}
+    type=2 when=+11m18s697ms repeatInterval=0 count=0
+    operation=PendingIntent{52a45654: PendingIntentRecord{52a20b9c com.google.android.gms broadcastIntent}}
+  ELAPSED_WAKEUP #1: Alarm{52b89bd4 type 2 com.google.android.googlequicksearchbox}
+    type=2 when=+11m2s830ms repeatInterval=0 count=0
+    operation=PendingIntent{52a4814c: PendingIntentRecord{528e99d0 com.google.android.googlequicksearchbox broadcastIntent}}
+  ELAPSED_WAKEUP #0: Alarm{52b2372c type 2 com.google.android.googlequicksearchbox}
+    type=2 when=+10m11s896ms repeatInterval=0 count=0
+    operation=PendingIntent{52a70238: PendingIntentRecord{52b236c8 com.google.android.googlequicksearchbox startService}}
+  ELAPSED #3: Alarm{52a18578 type 3 android}
+    type=3 when=+9d20h25m4s185ms repeatInterval=0 count=0
+    operation=PendingIntent{527a4d3c: PendingIntentRecord{528da1e4 android broadcastIntent}}
+  ELAPSED #2: Alarm{52b89694 type 3 com.google.android.gms}
+    type=3 when=+8h25m17s997ms repeatInterval=0 count=0
+    operation=PendingIntent{527909c0: PendingIntentRecord{52b8961c com.google.android.gms broadcastIntent}}
+  ELAPSED #1: Alarm{5284b0a8 type 3 com.android.phone}
+    type=3 when=+4h39m40s786ms repeatInterval=28800000 count=0
+    operation=PendingIntent{5288c2e0: PendingIntentRecord{5287fc1c com.android.phone broadcastIntent}}
+  ELAPSED #0: Alarm{528aba00 type 3 android}
+    type=3 when=+31s986ms repeatInterval=0 count=0
+    operation=PendingIntent{528488ec: PendingIntentRecord{528713dc android broadcastIntent}}
+
+  Broadcast ref count: 0
+
+  Top Alarms:
+    +5s788ms running, 2 wakeups, 2 alarms: com.android.providers.calendar
+       act=com.android.providers.calendar.intent.CalendarProvider2
+    +4s846ms running, 0 wakeups, 224 alarms: android
+       act=android.intent.action.TIME_TICK
+    +1s756ms running, 2 wakeups, 2 alarms: com.google.android.gms
+       act=com.google.android.intent.action.GCM_RECONNECT
+    +47ms running, 14 wakeups, 14 alarms: com.google.android.googlequicksearchbox
+       act=com.google.android.sidekick.shared.util.CalendarDataUtil.UPDATE_CALENDAR_ACTION cmp={com.google.android.googlequicksearchbox/com.google.android.sidekick.main.calendar.CalendarIntentService$CalendarReceiver}
+    +45ms running, 15 wakeups, 15 alarms: com.google.android.gms
+       act=com.google.android.intent.action.MCS_HEARTBEAT
+    +31ms running, 8 wakeups, 8 alarms: com.android.vending
+       cmp={com.android.vending/com.google.android.finsky.services.ContentSyncService}
+    +22ms running, 7 wakeups, 7 alarms: com.google.android.gsf
+       cmp={com.google.android.gsf/com.google.android.gsf.checkin.EventLogService$Receiver}
+    +14ms running, 14 wakeups, 14 alarms: com.google.android.googlequicksearchbox
+       cmp={com.google.android.googlequicksearchbox/com.google.android.sidekick.main.TrafficIntentService}
+    +8ms running, 7 wakeups, 7 alarms: android
+       act=android.content.syncmanager.SYNC_ALARM
+    +3ms running, 0 wakeups, 1 alarms: com.google.android.gms
+       cmp={com.google.android.gms/com.google.android.gms.playlog.uploader.UploaderAlarmReceiver}
+ 
+  Alarm Stats:
+  com.google.android.gsf +22ms running, 7 wakeups:
+    +22ms 7 wakes 7 alarms: cmp={com.google.android.gsf/com.google.android.gsf.checkin.EventLogService$Receiver}
+  com.android.providers.calendar +5s788ms running, 2 wakeups:
+    +5s788ms 2 wakes 2 alarms: act=com.android.providers.calendar.intent.CalendarProvider2
+  com.google.android.googlequicksearchbox +63ms running, 29 wakeups:
+    +47ms 14 wakes 14 alarms: act=com.google.android.sidekick.shared.util.CalendarDataUtil.UPDATE_CALENDAR_ACTION cmp={com.google.android.googlequicksearchbox/com.google.android.sidekick.main.calendar.CalendarIntentService$CalendarReceiver}
+    +14ms 14 wakes 14 alarms: cmp={com.google.android.googlequicksearchbox/com.google.android.sidekick.main.TrafficIntentService}
+    +2ms 1 wakes 1 alarms: cmp={com.google.android.googlequicksearchbox/com.google.android.velvet.VelvetBackgroundTasksImpl$Service}
+  com.android.vending +34ms running, 9 wakeups:
+    +31ms 8 wakes 8 alarms: cmp={com.android.vending/com.google.android.finsky.services.ContentSyncService}
+    +3ms 1 wakes 1 alarms: cmp={com.android.vending/com.google.android.finsky.services.DailyHygiene}
+  android +4s854ms running, 7 wakeups:
+    +4s846ms 0 wakes 224 alarms: act=android.intent.action.TIME_TICK
+    +8ms 7 wakes 7 alarms: act=android.content.syncmanager.SYNC_ALARM
+  com.google.android.gms +1s806ms running, 18 wakeups:
+    +1s756ms 2 wakes 2 alarms: act=com.google.android.intent.action.GCM_RECONNECT
+    +45ms 15 wakes 15 alarms: act=com.google.android.intent.action.MCS_HEARTBEAT
+    +3ms 0 wakes 1 alarms: cmp={com.google.android.gms/com.google.android.gms.playlog.uploader.UploaderAlarmReceiver}
+    +2ms 1 wakes 1 alarms: cmp={com.google.android.gms/com.google.android.gms.security.snet.SnetService}
