@@ -1,11 +1,24 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="${packageName}.${activityClass}">
+    android:orientation="vertical"
+    android:id="@+id/main_list_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
     <GridView
+        android:id="@+id/tips_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></GridView>
+        android:layout_height="wrap_content"
+        android:divider="@null"
+        android:dividerHeight="2dp"
+        android:layout_alignParentTop="true"
+        />
+
+    <ProgressBar
+        android:id="@+id/prgLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@android:style/Widget.ProgressBar.Inverse"
+        android:layout_centerInParent="true"/>
 
 </RelativeLayout>
+

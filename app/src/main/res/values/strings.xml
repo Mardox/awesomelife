@@ -21,5 +21,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_list">ListActivity</string>
     <string name="action_list">Tips List</string>
+    <string name="backend_url">http://30daylabs.com/cloud/</string>
+    <string name="no_search_results">No Results Found</string>
+    <string name="ok">OK</string>
 
 </resources>

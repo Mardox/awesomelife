@@ -15,25 +15,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="2dip">
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/sign_in_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:enabled="false" />
 
-        <Button
-            android:id="@+id/sign_out_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sign out"
-            android:enabled="false" />
-
-        <Button
-            android:id="@+id/revoke_access_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Revoke"
-            android:enabled="false" />
 
     </LinearLayout>
 
