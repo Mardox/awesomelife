@@ -41,18 +41,6 @@
             android:layout_alignBottom="@id/row_item_title"
             />
 
-        <ImageView
-            android:id="@+id/row_item_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_edit"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-
-            />
-
-
 
     </RelativeLayout>
 

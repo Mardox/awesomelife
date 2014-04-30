@@ -70,6 +70,7 @@
 
         <activity
             android:name="com.mardox.awesomelife.app.NewActivity"
+            android:windowSoftInputMode="stateHidden"
             android:label="@string/title_activity_new" >
         </activity>
         <activity

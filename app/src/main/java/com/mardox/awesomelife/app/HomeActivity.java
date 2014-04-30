@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.analytics.tracking.android.EasyTracker;
@@ -77,6 +78,7 @@ public class HomeActivity extends Activity implements
 
     TextView conceptTitleTextView ;
     TextView conceptSubtitleTextView ;
+    ProgressBar progBar;
 
     private static Handler handler;
 
@@ -149,6 +151,7 @@ public class HomeActivity extends Activity implements
 
         conceptTitleTextView = (TextView) findViewById(R.id.concept_main_title);
         conceptSubtitleTextView = (TextView) findViewById(R.id.concept_main_subtitle);
+        progBar =(ProgressBar) findViewById(R.id.prgLoading);
 
         //Handler to update UI after the backend thread
         handler = new Handler() {
@@ -203,6 +206,7 @@ public class HomeActivity extends Activity implements
             mSignInProgress = savedInstanceState
                     .getInt(SAVED_PROGRESS, STATE_DEFAULT);
         }
+
 
         mGoogleApiClient = buildGoogleApiClient();
 
@@ -416,7 +420,7 @@ public class HomeActivity extends Activity implements
                             });
                 } else {
                     return new AlertDialog.Builder(this)
-                            .setMessage("Play Error")
+                            .setMessage("Connecting...")
                             .setPositiveButton("Close",
                                     new DialogInterface.OnClickListener() {
                                         @Override
@@ -618,7 +622,7 @@ public class HomeActivity extends Activity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
+        getMenuInflater().inflate(R.menu.home_menu, menu);
         return true;
     }
 

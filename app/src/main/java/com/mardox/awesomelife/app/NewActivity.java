@@ -1,11 +1,15 @@
 package com.mardox.awesomelife.app;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,9 +34,8 @@ public class NewActivity extends Activity {
 
 
     Button submitButton;
-    Button deleteButton;
-    EditText newItemTitle;
-    EditText newItemDescription;
+    EditText itemTitle;
+    EditText itemDescription;
     String ID;
     String TITLE;
     String DESCRIPTION;
@@ -54,18 +57,20 @@ public class NewActivity extends Activity {
 
         progBar = (ProgressBar) findViewById(R.id.prgLoading);
         submitButton = (Button) findViewById(R.id.button_new_submit);
-        deleteButton = (Button) findViewById(R.id.button_delete);
-        newItemTitle = (EditText) findViewById(R.id.new_tip_title);
-        newItemDescription = (EditText) findViewById(R.id.new_tip_description);
+        itemTitle = (EditText) findViewById(R.id.new_tip_title);
+        itemDescription = (EditText) findViewById(R.id.new_tip_description);
 
-        newItemTitle.setText(TITLE);
-        newItemDescription.setText(DESCRIPTION);
+        itemTitle.setText(TITLE);
+        itemDescription.setText(DESCRIPTION);
 
         if(ID != null) {
+            itemTitle.setEnabled(false);
+            itemDescription.setEnabled(false);
             submitButton.setText("Update");
-            deleteButton.setVisibility(View.VISIBLE);
+            submitButton.setVisibility(View.GONE);
             setTitle("Update Tip");
         }else{
+            Menu deleteMenu = (Menu) findViewById(R.id.menu_action_delete);
             setTitle("Add a New Tip");
         }
 
@@ -73,24 +78,10 @@ public class NewActivity extends Activity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!newItemTitle.getText().toString().equals("")) {
+                if(!itemTitle.getText().toString().equals("")) {
                     progBar.setVisibility(View.VISIBLE);
                     if (postItemData.getState() == Thread.State.NEW)
                         postItemData.start();
-                }else{
-                    //empty item title error
-                }
-            }
-        });
-
-
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!newItemTitle.getText().toString().equals("")) {
-                    progBar.setVisibility(View.VISIBLE);
-                    if (deleteItem.getState() == Thread.State.NEW)
-                        deleteItem.start();
                 }else{
                     //empty item title error
                 }
@@ -112,6 +103,69 @@ public class NewActivity extends Activity {
     }
 
 
+    /**
+     * Delete dialog
+     */
+    private void deleteDialog() {
+
+        //Create the upgrade dialog
+        new AlertDialog.Builder(context)
+                .setTitle(getString(R.string.delete_item_dialog_title))
+                .setMessage(R.string.delte_dialog_message)
+                .setPositiveButton(R.string.yes_button, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // reset the request
+                        progBar.setVisibility(View.VISIBLE);
+                        if (deleteItem.getState() == Thread.State.NEW)
+                            deleteItem.start();
+
+
+                    }
+                })
+                .setNegativeButton(R.string.cancel_button, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .show();
+    }
+
+
+    private  void enableEdit(){
+        itemTitle.setEnabled(true);
+        itemDescription.setEnabled(true);
+        submitButton.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        if(ID !=null)
+            getMenuInflater().inflate(R.menu.item_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+
+        switch (item.getItemId()) {
+            case R.id.menu_action_edit:
+                enableEdit();
+                return true;
+            case R.id.menu_action_delete:
+                deleteDialog();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+
 
     Thread postItemData = new Thread( new Runnable() {
 
@@ -124,8 +178,8 @@ public class NewActivity extends Activity {
 
             // Create a new HttpClient and Post Header
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-            nameValuePairs.add(new BasicNameValuePair("title", newItemTitle.getText().toString()));
-            nameValuePairs.add(new BasicNameValuePair("description", newItemDescription.getText().toString()));
+            nameValuePairs.add(new BasicNameValuePair("title", itemTitle.getText().toString()));
+            nameValuePairs.add(new BasicNameValuePair("description", itemDescription.getText().toString()));
             nameValuePairs.add(new BasicNameValuePair("uid", HomeActivity.userID));
 
             if(ID != null) {
