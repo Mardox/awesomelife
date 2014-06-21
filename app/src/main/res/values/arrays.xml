@@ -9,5 +9,15 @@
         <item>Ask Me Later</item>
         <item>No Thanks</item>
     </string-array>
-
+    <string-array name="activity_array">
+        <item>Standing/Sitting</item>
+        <item>Walking</item>
+        <item>Running</item>
+        <item>Driving</item>
+    </string-array>
+    <string-array name="device_array">
+        <item>Both</item>
+        <item>Phone</item>
+        <item>Wearable</item>
+    </string-array>
 </resources>

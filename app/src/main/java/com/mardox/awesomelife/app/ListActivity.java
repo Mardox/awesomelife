@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -17,21 +16,15 @@ import android.widget.ListAdapter;
 import android.widget.ProgressBar;
 
 import com.mardox.awesomelife.app.utils.MenuFunctions;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ListActivity extends Activity {
 
@@ -41,7 +34,7 @@ public class ListActivity extends Activity {
     ListAdapter adapter;
     ProgressBar progBar;
 
-    View rootView;
+    ParseUser user;
 
     Context context = this;
 
@@ -49,7 +42,6 @@ public class ListActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-
 
         setTitle("Your Tips");
 
@@ -64,128 +56,79 @@ public class ListActivity extends Activity {
 
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
 
         itemsList.clear();
         progBar.setVisibility(View.VISIBLE);
-        String API_URL = getString(R.string.backend_url)+"api/concepts?format=json&uid="+HomeActivity.userID;
-        new GetTips().execute(API_URL);
 
-    }
+        user = ParseUser.getCurrentUser();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("UserTip");
+        query.whereEqualTo("user", user);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> results, ParseException e) {
+                if (e != null) {
+                    // There was an error
+                } else {
+                    // results have all the Posts the current user liked.
 
+                    if(results.size()>0) {
 
+                        //loop through each item in the tweet array
+                        for (int t = 0; t < results.size(); t++) {
 
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            ParseObject item;
+                            item = results.get(t);
+                            String itemID = item.getObjectId();
+                            String title = item.getString("title");
+                            String description = item.getString("description");
 
-    private class GetTips extends AsyncTask<String, Void, String> {
+                            // adding each child node to HashMap key =&gt; value
 
-        @Override
-        protected String doInBackground(String... apiURL) {
-            //start building result which will be json string
-            StringBuilder apiFeedBuilder = new StringBuilder();
-            //should only be one URL, receives array
-            for (String searchURL : apiURL) {
-                HttpClient apiClient = new DefaultHttpClient();
-                try {
-                    //pass search URL string to fetch
-                    HttpGet apiGet = new HttpGet(searchURL);
-                    //execute request
-                    HttpResponse apiResponse = apiClient.execute(apiGet);
-                    //check status, only proceed if ok
-                    StatusLine searchStatus = apiResponse.getStatusLine();
-                    //Log.e("myApp", "I am here ");
-                    if (searchStatus.getStatusCode() == 200) {
-                        //get the response
-                        HttpEntity apiEntity = apiResponse.getEntity();
-                        InputStream entityContent = apiEntity.getContent();
-                        //process the results
-                        InputStreamReader readerInput = new InputStreamReader(entityContent);
-                        BufferedReader tweetReader = new BufferedReader(readerInput);
-                        String lineIn;
-                        while ((lineIn = tweetReader.readLine()) != null) {
-                            apiFeedBuilder.append(lineIn);
+                            map.put(HomeActivity.KEY_TITLE, title);
+                            map.put(HomeActivity.KEY_DESCRIPTION, description);
+                            map.put(HomeActivity.KEY_ID, itemID);
+                            Log.i(HomeActivity.TAG,"Data:" + title);
+                            itemsList.add(map);
+
                         }
+
                     }
-                    else
-                        Log.e("myApp","Whoops - something went wrong with status code!"
-                                + searchStatus.getStatusCode());
-                }
-                catch(Exception e){
-                    Log.e("myApp", "Whoops - something went wrong with httpObject!");
-                    // e.printStackTrace();
+
+                    //inflating the list view
+                    //check result exists
+                    if (!itemsList.isEmpty()) {
+                        tipsList.invalidateViews();
+                        tipsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            HashMap<String, String> item;
+
+                            @Override
+                            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                                item = itemsList.get(position);
+                                String item_id = item.get("id");
+                                String item_title = item.get("title");
+                                String item_description = item.get("description");
+                                Intent editActivity = new Intent(context, SingleActivity.class);
+                                editActivity.putExtra("id", item_id);
+                                editActivity.putExtra("title", item_title);
+                                editActivity.putExtra("description", item_description);
+                                startActivity(editActivity);
+                            }
+
+                        });
+
+                    }
+
+                    prgLoading.setVisibility(View.GONE);
+
+
                 }
             }
-            //return result string
-            return apiFeedBuilder.toString();
-        }
+        });
 
-
-        protected void onPostExecute(String result) {
-            //start preparing result string for display
-                try {
-                    //get JSONObject from result
-//                    JSONObject JSONResult = new JSONObject(result);
-                    JSONArray JSONResult = new JSONArray(result);
-
-                    //loop through each item in the tweet array
-                    for (int t = 0; t < JSONResult.length(); t++) {
-
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        JSONObject item;
-                        item = JSONResult.getJSONObject(t);
-                        String itemID = item.getString("id");
-                        String title = item.getString("title");
-                        String description = item.getString("description");
-
-                        // adding each child node to HashMap key =&gt; value
-
-                        map.put(HomeActivity.KEY_TITLE, title);
-                        map.put(HomeActivity.KEY_DESCRIPTION, description);
-                        map.put(HomeActivity.KEY_ID, itemID);
-                        Log.i(HomeActivity.TAG,"Data:" + title);
-                        itemsList.add(map);
-
-                    }
-
-                } catch (Exception e) {
-                    Log.e(HomeActivity.TAG, "Whoops:" + e.toString());
-                    noResultErrorDialog();
-                    e.printStackTrace();
-                }
-
-                //inflating the list view
-                //check result exists
-                if (!itemsList.isEmpty()) {
-
-                    prgLoading.setVisibility(View.GONE);
-                    tipsList.invalidateViews();
-                    tipsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        HashMap<String, String> item;
-
-                        @Override
-                        public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                            item = itemsList.get(position);
-                            String item_id = item.get("id");
-                            String item_title = item.get("title");
-                            String item_description = item.get("description");
-                            Intent editActivity = new Intent(context, NewActivity.class);
-                            editActivity.putExtra("id", item_id);
-                            editActivity.putExtra("title", item_title);
-                            editActivity.putExtra("description", item_description);
-                            startActivity(editActivity);
-                        }
-
-                    });
-
-                } else {
-                    prgLoading.setVisibility(View.GONE);
-                }
-
-
-        }
 
     }
-
 
 
     /**

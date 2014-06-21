@@ -30,6 +30,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name="com.mardox.awesomelife.app.SettingsActivity" />
 
         <receiver android:name="com.mardox.awesomelife.app.WidgetProvider" >
@@ -41,11 +42,13 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/appwidget_info" />
         </receiver>
+
         <receiver
             android:name="com.mardox.awesomelife.app.DailyConceptService"
             android:enabled="true"
             android:process=":remote" >
         </receiver>
+
         <receiver android:name="com.mardox.awesomelife.app.utils.BaseBootReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" >
@@ -69,9 +72,14 @@
         </receiver>
 
         <activity
-            android:name="com.mardox.awesomelife.app.NewActivity"
+            android:name=".SingleActivity"
             android:windowSoftInputMode="stateHidden"
-            android:label="@string/title_activity_new" >
+            android:label="@string/title_activity_new"
+            android:parentActivityName=".HomeActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
         </activity>
         <activity
             android:name="com.mardox.awesomelife.app.ListActivity"

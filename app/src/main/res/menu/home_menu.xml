@@ -13,14 +13,8 @@
         android:icon="@drawable/ic_action_view_as_list"
         android:showAsAction="collapseActionView|always" />
 
-    <item android:id="@+id/menu_action_signout"
-        android:title="sign out"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
-
-
-    <item android:id="@+id/menu_action_revoke"
-        android:title="revoke"
+    <item android:id="@+id/menu_action_projects"
+        android:title="Projects"
         android:orderInCategory="100"
         app:showAsAction="never" />
 

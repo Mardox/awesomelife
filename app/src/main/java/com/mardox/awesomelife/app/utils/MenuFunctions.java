@@ -8,7 +8,7 @@ import android.content.SharedPreferences;
 
 import com.mardox.awesomelife.app.HomeActivity;
 import com.mardox.awesomelife.app.ListActivity;
-import com.mardox.awesomelife.app.NewActivity;
+import com.mardox.awesomelife.app.SingleActivity;
 import com.mardox.awesomelife.app.R;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class MenuFunctions {
 
     public static boolean newTip(Context context){
 
-        Intent aboutIntent = new Intent(context , NewActivity.class);
+        Intent aboutIntent = new Intent(context , SingleActivity.class);
         context.startActivity(aboutIntent);
         return true;
     }
