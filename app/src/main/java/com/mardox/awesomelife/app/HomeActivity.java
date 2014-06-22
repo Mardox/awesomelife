@@ -83,7 +83,7 @@ public class HomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
+//        Parse.enableLocalDatastore(this);
         Parse.initialize(this, "fbFOobRj9eYDMlke2uP13hasXiNEJZB2FCNDRzu4", "4jRYFVuJ4U0oSkOvmdCulZX9LRQBFuf92XXl8X5Q");
 
         // Restore preferences
@@ -181,6 +181,8 @@ public class HomeActivity extends Activity {
             });
         }
 
+
+
     }
 
 
@@ -204,11 +206,7 @@ public class HomeActivity extends Activity {
     @Override
     public void onStop() {
         super.onStop();
-
-
         EasyTracker.getInstance(this).activityStop(this);  // Add this method.
-
-
     }
 
 

@@ -82,8 +82,13 @@
                 android:value=".HomeActivity" />
         </activity>
         <activity
-            android:name="com.mardox.awesomelife.app.ListActivity"
-            android:label="@string/title_activity_list" >
+            android:name=".ListActivity"
+            android:label="@string/title_activity_list"
+            android:parentActivityName=".HomeActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
         </activity>
     </application>
 

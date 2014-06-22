@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,6 +43,8 @@ public class ListActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         setTitle("Your Tips");
 
@@ -131,6 +134,21 @@ public class ListActivity extends Activity {
     }
 
 
+    //Update the list view on change in the single item view
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        switch(requestCode) {
+//            case (MY_CHILD_ACTIVITY) : {
+//                if (resultCode == Activity.RESULT_OK) {
+//                    // TODO Extract the data returned from the child Activity.
+//                }
+//                break;
+//            }
+//        }
+//    }
+
+
     /**
      * Network connection error dialog
      */
@@ -149,7 +167,6 @@ public class ListActivity extends Activity {
                 .setIcon(R.drawable.ic_action_dark_error)
                 .show();
     }
-
 
 
     /**
@@ -186,6 +203,9 @@ public class ListActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
 
         switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
             case R.id.menu_action_add:
                 MenuFunctions.newTip(context);
             default:
