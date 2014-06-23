@@ -48,7 +48,6 @@ public class ListActivity extends Activity {
 
         setTitle("Your Tips");
 
-        //Log.i(HomeActivity.TAG, "List activity: " + HomeActivity.userID);
         progBar = (ProgressBar) findViewById(R.id.prgLoading);
         adapter= new ListViewAdapter(this, itemsList, this);
         prgLoading = (ProgressBar) findViewById(R.id.prgLoading);
@@ -64,6 +63,7 @@ public class ListActivity extends Activity {
 
         itemsList.clear();
         progBar.setVisibility(View.VISIBLE);
+
 
         user = ParseUser.getCurrentUser();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("UserTip");

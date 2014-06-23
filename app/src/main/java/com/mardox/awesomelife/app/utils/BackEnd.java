@@ -6,10 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
+import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.mardox.awesomelife.app.HomeActivity;
+import com.mardox.awesomelife.app.R;
 import com.mardox.awesomelife.app.SettingsActivity;
 import com.mardox.awesomelife.app.WidgetProvider;
 import com.parse.FunctionCallback;
@@ -37,7 +39,8 @@ public class BackEnd {
         packageName = packageInfo.packageName;
         contextVariable = context;
 
-        SharedPreferences storage = contextVariable.getSharedPreferences(HomeActivity.PREFS_NAME, contextVariable.MODE_MULTI_PROCESS);
+        SharedPreferences storage =
+                contextVariable.getSharedPreferences(HomeActivity.PREFS_NAME, contextVariable.MODE_MULTI_PROCESS);
 
         // Set the date of the first launch
         Long firstLaunchDate = storage.getLong("firstLaunchDate", 0);
@@ -48,7 +51,7 @@ public class BackEnd {
         // Create a HashMap which stores Strings as the keys and values
         final Map<String,Object> push = new HashMap<String,Object>();
 
-        Parse.initialize(context, "fbFOobRj9eYDMlke2uP13hasXiNEJZB2FCNDRzu4", "4jRYFVuJ4U0oSkOvmdCulZX9LRQBFuf92XXl8X5Q");
+        Parse.initialize(context, context.getString(R.string.parse_app_id), context.getString(R.string.parse_app_client_key));
         ParseUser user = ParseUser.getCurrentUser();
         HashMap<String, Object> params = new HashMap<String, Object>();
         params.put("user", user.getObjectId().toString());
@@ -57,7 +60,6 @@ public class BackEnd {
                 if (e == null) {
 
                     String title = mapObject.get("title").toString();
-
                     String description = mapObject.get("description").toString();
 
                     // Adding some values to the HashMap
@@ -65,8 +67,8 @@ public class BackEnd {
                     push.put("subtitle", description);
                     push.put("externalIcon", "");
 
-
-                    SharedPreferences settings = contextVariable.getSharedPreferences(HomeActivity.PREFS_NAME, Context.MODE_MULTI_PROCESS );
+                    SharedPreferences settings =
+                            contextVariable.getSharedPreferences(HomeActivity.PREFS_NAME, Context.MODE_MULTI_PROCESS );
                     SharedPreferences.Editor editor = settings.edit();
                     editor.putString("todayConceptTitle", title );
                     editor.putString("todayConceptDescription", description );
@@ -84,10 +86,13 @@ public class BackEnd {
                     intent.setAction("android.appwidget.action.APPWIDGET_UPDATE");
                     // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
                     // since it seems the onUpdate() is only fired on that:
-                    int[] ids = AppWidgetManager.getInstance(contextVariable).getAppWidgetIds(new ComponentName(contextVariable, WidgetProvider.class));;
+                    int[] ids = AppWidgetManager.getInstance(contextVariable).getAppWidgetIds(new ComponentName(contextVariable, WidgetProvider.class));
                     intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
                     context.sendBroadcast(intent);
 
+                    PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+                    boolean isScreenOn = pm.isScreenOn();
+                    Log.i(HomeActivity.TAG, "is screen on:" + isScreenOn );
 
                 } else {
                     Log.e(HomeActivity.TAG, e.toString());

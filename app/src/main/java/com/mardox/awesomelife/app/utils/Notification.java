@@ -34,10 +34,10 @@ public class Notification {
 
         final int NOTIFICATION_ID = 1;
         NotificationManager mNotificationManager;
-        final String TAG = "Timer";
 
         //Dismiss the notifications
-        NotificationManager manager = (NotificationManager) mContext.getSystemService(Service.NOTIFICATION_SERVICE);
+        NotificationManager manager =
+                (NotificationManager) mContext.getSystemService(Service.NOTIFICATION_SERVICE);
         manager.cancel(1);
 
         String title = (String) push.get("title");
@@ -46,7 +46,6 @@ public class Notification {
 
         // Get instance of Vibrator from current Context
         Vibrator v = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
-
         // Vibrate for 400 milliseconds
         v.vibrate(400);
 
@@ -67,19 +66,22 @@ public class Notification {
 
         PendingIntent contentIntent = PendingIntent.getActivity(mContext, 0, intent, 0);
 
+        NotificationCompat.BigTextStyle bigStyle = new NotificationCompat.BigTextStyle();
+        bigStyle.bigText(subtitle);
+
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(mContext)
                         .setSmallIcon(R.drawable.ic_notification_icon)
                         .setContentTitle(title)
-                        .setContentText(subtitle);
-
+                        .setContentText(subtitle)
+                        .setContentIntent(contentIntent)
+                        .setStyle(bigStyle);
 
         if(!externalIcon.equals("")){
             Bitmap bitmap = getBitmapFromURL(externalIcon);
             mBuilder.setLargeIcon(bitmap);
         }
 
-        mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 

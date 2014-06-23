@@ -30,5 +30,8 @@
     <string name="cancel_button">Cancel</string>
     <string name="action_edit">Edit</string>
     <string name="action_delete">Delete</string>
+    <string name="parse_app_id">fbFOobRj9eYDMlke2uP13hasXiNEJZB2FCNDRzu4</string>
+    <string name="parse_app_client_key">4jRYFVuJ4U0oSkOvmdCulZX9LRQBFuf92XXl8X5Q</string>
+    <string name="title_activity_project">ProjectActivity</string>
 
 </resources>

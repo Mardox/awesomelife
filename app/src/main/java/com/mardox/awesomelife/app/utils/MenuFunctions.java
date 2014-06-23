@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 
 import com.mardox.awesomelife.app.HomeActivity;
 import com.mardox.awesomelife.app.ListActivity;
+import com.mardox.awesomelife.app.ProjectActivity;
 import com.mardox.awesomelife.app.SingleActivity;
 import com.mardox.awesomelife.app.R;
 
@@ -31,6 +32,14 @@ public class MenuFunctions {
         context.startActivity(aboutIntent);
         return true;
     }
+
+    public static boolean projects(Context context){
+
+        Intent projectIntent = new Intent(context , ProjectActivity.class);
+        context.startActivity(projectIntent);
+        return true;
+    }
+
 
     public static boolean settings(Context context){
 

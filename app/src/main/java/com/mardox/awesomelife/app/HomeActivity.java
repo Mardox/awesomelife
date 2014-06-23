@@ -14,8 +14,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,20 +32,6 @@ import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-
 public class HomeActivity extends Activity {
 
 
@@ -64,14 +48,9 @@ public class HomeActivity extends Activity {
     String title ;
     String description ;
 
-    public static String userID;
-    String emailAddress;
-
     TextView conceptTitleTextView ;
     TextView conceptSubtitleTextView ;
     ProgressBar progBar;
-
-    private static Handler handler;
 
     Thread backendCall;
 
@@ -83,8 +62,10 @@ public class HomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-//        Parse.enableLocalDatastore(this);
-        Parse.initialize(this, "fbFOobRj9eYDMlke2uP13hasXiNEJZB2FCNDRzu4", "4jRYFVuJ4U0oSkOvmdCulZX9LRQBFuf92XXl8X5Q");
+        // Uncomment this carefully :
+        // causes the anonymous users to be deleted!
+        // Parse.enableLocalDatastore(this);
+        Parse.initialize(this, getString(R.string.parse_app_id), getString(R.string.parse_app_client_key));
 
         // Restore preferences
         storage = getSharedPreferences(PREFS_NAME, MODE_MULTI_PROCESS);
@@ -112,46 +93,22 @@ public class HomeActivity extends Activity {
         progBar =(ProgressBar) findViewById(R.id.prgLoading);
 
         //Handler to update UI after the backend thread
-        handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                description = storage.getString("todayConceptDescription", "");
-                conceptSubtitleTextView.setText(description);
 
-                title = storage.getString("todayConceptTitle", "");
-                conceptTitleTextView.setText(title);
+        description = storage.getString("todayConceptDescription", "");
+        conceptSubtitleTextView.setText(description);
 
-            }
-        };
+        title = storage.getString("todayConceptTitle", "");
+        conceptTitleTextView.setText(title);
 
-        //Thread to get the first concept upon the first launch of the app
-        backendCall = new Thread(new Runnable() {
 
-            @Override
-            public void run() {
-
-                try {
-                    //If the current concept already exists
-                    if(storage.getString("todayConceptTitle", "").equals("")) {
-                        BackEnd backendConnection = new BackEnd();
-                        //get the new concept from the backend without the notification trigger
-                        backendConnection.getConcept(context, false);
-                    }
-
-                    Message msg = new Message();
-                    handler.sendMessage(msg);
-                } catch (Exception e) {
-                    Log.v("Error", e.toString());
-                }
-
-            }
-        });
-
+        if(title.equals("")) {
+            BackEnd backendConnection = new BackEnd();
+            //get the new concept from the backend without the notification trigger
+            backendConnection.getConcept(context, false);
+        }
 
         if(!isOnline()){
             networkErrorDialog();
-        }else{
-            backendCall.start();
         }
 
         //set daily pick alarm, no forced update
@@ -164,7 +121,9 @@ public class HomeActivity extends Activity {
     }
 
 
-
+    /**
+     * Parse Login
+     */
     private void parseLogin(){
 
         user = ParseUser.getCurrentUser();
@@ -184,9 +143,6 @@ public class HomeActivity extends Activity {
 
 
     }
-
-
-
 
     @Override
     protected void onStart(){
@@ -208,7 +164,6 @@ public class HomeActivity extends Activity {
         super.onStop();
         EasyTracker.getInstance(this).activityStop(this);  // Add this method.
     }
-
 
 
     /**
@@ -410,6 +365,9 @@ public class HomeActivity extends Activity {
             case R.id.menu_action_add:
                 MenuFunctions.newTip(context);
                 return true;
+            case R.id.menu_action_projects:
+                MenuFunctions.projects(context);
+                return true;
             case R.id.menu_action_list:
                 MenuFunctions.listTip(context);
                 return true;
@@ -424,36 +382,6 @@ public class HomeActivity extends Activity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
-
-    Thread postUserData = new Thread( new Runnable() {
-
-        @Override
-        public void run() {
-
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost("http://30daylabs.com/cloud/api/user");
-
-
-            // Create a new HttpClient and Post Header
-            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-            nameValuePairs.add(new BasicNameValuePair("email", emailAddress));
-            nameValuePairs.add(new BasicNameValuePair("uid", userID));
-
-            try {
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                HttpResponse response = httpclient.execute(httppost);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-    });
 
 
 }
