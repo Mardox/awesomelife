@@ -33,5 +33,6 @@
     <string name="parse_app_id">fbFOobRj9eYDMlke2uP13hasXiNEJZB2FCNDRzu4</string>
     <string name="parse_app_client_key">4jRYFVuJ4U0oSkOvmdCulZX9LRQBFuf92XXl8X5Q</string>
     <string name="title_activity_project">ProjectActivity</string>
+    <string name="reply_label">Reply Now</string>
 
 </resources>
