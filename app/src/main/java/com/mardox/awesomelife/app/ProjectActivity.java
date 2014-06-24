@@ -18,14 +18,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.parse.FunctionCallback;
+import com.parse.GetCallback;
 import com.parse.Parse;
+import com.parse.ParseCloud;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProjectActivity extends ActionBarActivity {
 
 
-    Button initiateProjectBT;
+    Context context = this;
 
-    public static final String EXTRA_REPLY = "reply";
+    Button initiateProjectBT;
 
     private static final String ACTION_RESPONSE = "com.mardox.awesomelife.app.REPLY";
 
@@ -38,6 +47,12 @@ public class ProjectActivity extends ActionBarActivity {
     String replyLabel;
 
     String[] replyChoices;
+
+    String projectTitle;
+    String projectDescription;
+    String currentNodeObjectId;
+
+    ParseObject currentNode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,69 +78,100 @@ public class ProjectActivity extends ActionBarActivity {
         initiateProjectBT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                executeStep();
+                //Get the project object from the back-end
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("Package");
+                query.getInBackground("gX5O11uJva", new GetCallback<ParseObject>() {
+                    public void done(ParseObject object, ParseException e) {
+                        if (e == null) {
+                            // project object
+                            currentNodeObjectId = object.getString("startAction");
+                            projectTitle = object.getString("title");
+                            projectDescription = object.getString("description");
+                            executeSequence(currentNodeObjectId);
+                        } else {
+                            // something went wrong
+                        }
+                    }
+                });
+
             }
         });
 
 
-    }
+        }
 
     @Override
-    protected void onPostResume() {
+    protected void onResume() {
+        super.onResume();
         registerReceiver(mReceiver, new IntentFilter(ACTION_RESPONSE));
-        super.onPostResume();
     }
 
     @Override
     protected void onPause() {
-        NotificationManagerCompat.from(this).cancel(0);
+//        NotificationManagerCompat.from(this).cancel(0);
         unregisterReceiver(mReceiver);
         super.onPause();
     }
 
-    public void executeStep(){
+    public void executeSequence(String currentNodeObjectId){
 
-        int notificationId = 0;
 
-        // Create intent for reply action
-        Intent replyIntent = new Intent(this, ProjectActivity.class);
-        PendingIntent replyPendingIntent =
-                PendingIntent.getActivity(this, 0, replyIntent, 0);
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Package");
+        query.getInBackground(currentNodeObjectId, new GetCallback<ParseObject>() {
+            public void done(ParseObject object, ParseException e) {
+                if (e == null) {
+                    // project object
+                    currentNode = object;
 
-        // Build the notification
-        NotificationCompat.Builder replyNotificationBuilder =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_action_about)
-                        .setContentTitle("Message from Travis")
-                        .setContentText("I love key lime pie!")
-                        .setContentIntent(replyPendingIntent);
+                    int notificationId = 0;
 
-        // Create the remote input
-        RemoteInput remoteInput = new RemoteInput.Builder(EXTRA_VOICE_REPLY)
-                .setLabel(replyLabel)
-                .setChoices(replyChoices)
-                .build();
+                    // Create intent for reply action
+                    //Cancel the current on reply from the notification
+                    Intent replyIntent = new Intent(ACTION_RESPONSE);
+                    PendingIntent replyPendingIntent = PendingIntent.getBroadcast(context, 0, replyIntent,
+                            PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_CANCEL_CURRENT);
 
-        // Create wearable notification and add remote input
-        Notification replyNotification =
-                new WearableNotifications.Builder(replyNotificationBuilder)
-                        .addRemoteInputForContentIntent(remoteInput)
-                        .build();
+                    // Build the notification
+                    NotificationCompat.Builder replyNotificationBuilder =
+                            new NotificationCompat.Builder(context)
+                                    .setSmallIcon(R.drawable.ic_action_about)
+                                    .setContentTitle(object.getString("title"))
+                                    .setContentText(object.getString("description"))
+                                    .setContentIntent(replyPendingIntent);
 
-        // Get an instance of the NotificationManager service
-        NotificationManagerCompat notificationManager =
-                NotificationManagerCompat.from(this);
+                    // Create the remote input
+                    RemoteInput remoteInput = new RemoteInput.Builder(EXTRA_VOICE_REPLY)
+                            .setLabel(replyLabel)
+                            .setChoices(replyChoices)
+                            .build();
 
-        // Build the notification and issues it with notification manager.
-        notificationManager.notify(notificationId, replyNotification);
+                    // Create wearable notification and add remote input
+                    Notification replyNotification =
+                            new WearableNotifications.Builder(replyNotificationBuilder)
+                                    .addRemoteInputForContentIntent(remoteInput)
+                                    .build();
+
+                    // Get an instance of the NotificationManager service
+                    NotificationManagerCompat notificationManager =
+                            NotificationManagerCompat.from(context);
+
+                    // Build the notification and issues it with notification manager.
+                    notificationManager.notify(notificationId, replyNotification);
+
+
+                } else {
+                    // something went wrong
+                }
+            }
+        });
 
     }
 
 
     private void processResponse(Intent intent) {
-        String text = intent.getStringExtra(EXTRA_REPLY);
+        String text = intent.getStringExtra(EXTRA_VOICE_REPLY);
         if (text != null && !text.equals("")) {
-            Log.i(HomeActivity.TAG, "Notification callback");
+
         }
     }
 

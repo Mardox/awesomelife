@@ -104,7 +104,7 @@ public class HomeActivity extends Activity {
         if(title.equals("")) {
             BackEnd backendConnection = new BackEnd();
             //get the new concept from the backend without the notification trigger
-            backendConnection.getConcept(context, false);
+//            backendConnection.getConcept(context, false);
         }
 
         if(!isOnline()){
