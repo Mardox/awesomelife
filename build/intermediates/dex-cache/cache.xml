@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="/Users/Hooman/Projects/awesomelife/app/build/intermediates/pre-dexed/debug/wearable-preview-support-246ceb6bfbbfa14f0c3a90ec41ae0f0bef044caf.jar"
+        jar="/Users/Hooman/Projects/awesomelife/app/libs/wearable-preview-support.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="4f4678fce7b2869bee25328441563fc61037b6cc"/>
+    <item
+        dex="/Users/Hooman/Projects/awesomelife/app/build/intermediates/pre-dexed/debug/support-v4-19.1.0-fe930dc68beb1e566675ce71b270d4091c6c249b.jar"
+        jar="/Applications/Android Studio.app/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
+    <item
+        dex="/Users/Hooman/Projects/awesomelife/app/build/intermediates/pre-dexed/debug/classes-e8df48820a42fb19b476d16974c2b760a02b5c59.jar"
+        jar="/Users/Hooman/Projects/awesomelife/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
+    <item
+        dex="/Users/Hooman/Projects/awesomelife/app/build/intermediates/pre-dexed/debug/classes-1b09095c6a22669cb7c3131db0b997bd0262e1dd.jar"
+        jar="/Users/Hooman/Projects/awesomelife/build/intermediates/exploded-aar/com.google.android.gms/play-services/4.4.52/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="3dfdf1db5ce5ea2999a5dcde8c8e650b02660059"/>
+    <item
+        dex="/Users/Hooman/Projects/awesomelife/app/build/intermediates/pre-dexed/debug/libGoogleAnalyticsServices-49d5dd15ee7404d6d29d6c5a88f9c682c478532c.jar"
+        jar="/Users/Hooman/Projects/awesomelife/app/libs/libGoogleAnalyticsServices.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="e887c6c9b31b39a39b0eaba981448b78902ea813"/>
+    <item
+        dex="/Users/Hooman/Projects/awesomelife/app/build/intermediates/pre-dexed/debug/Parse-1.5.1-e87258787c8dd0c58239802051339795459129b0.jar"
+        jar="/Users/Hooman/Projects/awesomelife/app/libs/Parse-1.5.1.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="3d645417e7780d44f32e29a3ec6b729b75aef26c"/>
+
+</pre-dex-items>
